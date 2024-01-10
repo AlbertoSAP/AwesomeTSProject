@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-  TouchableOpacity,
   View,
   Text,
   StyleSheet,
   ViewStyle,
+  TouchableNativeFeedback,
 } from 'react-native';
 
 export enum BtnStyles {
@@ -17,11 +17,11 @@ export enum BtnStyles {
 }
 
 export enum PositionButton {
-  left = 'left',
+  left = 'left',  
   right = 'rigth',
 }
 
-interface FloatingButtonProps {
+interface FloatingButtonProps { 
   onPressHandler: () => void;
   buttonStyle: BtnStyles;
   positionFloat: 'left' | 'rigth';
@@ -39,6 +39,25 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
     bottom: 25,
   };
 
+  const shadowHandler = () => {
+    switch (buttonStyle) {
+      case BtnStyles.btnPrimary:
+        return '#007bff';
+      case BtnStyles.btnSecondary:
+        return '#6c757d';
+      case BtnStyles.btnSuccess:
+        return '#28a745';
+      case BtnStyles.btnDanger:
+        return '#610000';
+
+      case BtnStyles.btnWarning:
+        return '#ffc107';
+
+      default:
+        return '#009092';
+    }
+  };
+
   if (positionFloat === PositionButton.left) {
     configPosition = {...configPosition, left: 25};
   }
@@ -47,11 +66,15 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
   }
 
   return (
-    <TouchableOpacity style={configPosition} onPress={onPressHandler}>
-      <View style={{...styles.fab, backgroundColor: `${buttonStyle}`}}>
-        <Text style={styles.fabText}>{text}</Text>
-      </View>
-    </TouchableOpacity>
+    <View style={configPosition}>
+      <TouchableNativeFeedback
+        onPress={onPressHandler}
+        background={TouchableNativeFeedback.Ripple(shadowHandler(), false, 30)}>
+        <View style={{...styles.fab, backgroundColor: `${buttonStyle}`}}>
+          <Text style={styles.fabText}>{text}</Text>
+        </View>
+      </TouchableNativeFeedback>
+    </View>
   );
 };
 
@@ -69,7 +92,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 9,
     },
-    shadowOpacity: 0.30,
+    shadowOpacity: 0.3,
     shadowRadius: 4.65,
     elevation: 8,
   },

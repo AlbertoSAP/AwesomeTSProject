@@ -35,7 +35,7 @@ const CounterScreen = () => {
       </TouchableOpacity> */}
       <FloatingButton
          onPressHandler={increaseHandler}
-         buttonStyle={BtnStyles.btnSuccess}
+         buttonStyle={BtnStyles.btnInfo}
          positionFloat={PositionButton.left}
          text='+'
       />
