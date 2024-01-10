@@ -5,6 +5,8 @@ import {
   StyleSheet,
   ViewStyle,
   TouchableNativeFeedback,
+  Platform,
+  TouchableOpacity
 } from 'react-native';
 
 export enum BtnStyles {
@@ -65,17 +67,44 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
     configPosition = {...configPosition, right: 25};
   }
 
-  return (
-    <View style={configPosition}>
-      <TouchableNativeFeedback
-        onPress={onPressHandler}
-        background={TouchableNativeFeedback.Ripple(shadowHandler(), false, 30)}>
+  const android = () => {
+    return (
+      <View style={configPosition}>
+        <TouchableNativeFeedback
+          onPress={onPressHandler}
+          background={TouchableNativeFeedback.Ripple(
+            shadowHandler(),
+            false,
+            30,
+          )}>
+          <View style={{...styles.fab, backgroundColor: `${buttonStyle}`}}>
+            <Text style={styles.fabText}>{text}</Text>
+          </View>
+        </TouchableNativeFeedback>
+      </View>
+    );
+  };
+  const ios = () => {
+    return (
+      <TouchableOpacity 
+      style={configPosition} 
+      onPress={onPressHandler}
+      activeOpacity={0.75}
+      >
         <View style={{...styles.fab, backgroundColor: `${buttonStyle}`}}>
           <Text style={styles.fabText}>{text}</Text>
         </View>
-      </TouchableNativeFeedback>
-    </View>
-  );
+      </TouchableOpacity>
+    );
+  };
+
+  switch (Platform.OS) {
+    case 'ios':
+      return ios();
+
+    default:
+      return android();
+  }
 };
 
 export default FloatingButton;
