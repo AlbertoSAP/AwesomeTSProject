@@ -3,6 +3,6 @@ module.exports = {
   extends: '@react-native',
   // avoid the use of prettier
   rules:{
-    'prettier/prettier':0
-  }
+    'prettier/prettier':0,
+  },
 };

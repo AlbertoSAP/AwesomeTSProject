@@ -75,7 +75,7 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({
           background={TouchableNativeFeedback.Ripple(
             shadowHandler(),
             false,
-            30,
+            33,
           )}>
           <View style={{...styles.fab, backgroundColor: `${buttonStyle}`}}>
             <Text style={styles.fabText}>{text}</Text>
